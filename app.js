@@ -24,21 +24,21 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-//Inicializar i18n
-const i18n = require("./lib/i18nConfigure");
-app.use(i18n.init);
-/* i18n.setLocale("es");
-console.log(i18n.__("Welcome to NodeApi")); */
-
 app.use(express.static(path.join(__dirname, "public")));
 
 // Global Template variables
 app.locals.title = "NodePop";
 
+//Inicializar i18n
+const i18n = require("./lib/i18nConfigure");
+app.use(i18n.init);
+/* i18n.setLocale("es");
+console.log(i18n.__("Welcome to NodePop")); */
+
 // Web
 app.use("/", require("./routes/index"));
 app.use("/anuncios", require("./routes/anuncios"));
-
+app.use("/change-locale", require("./routes/change-locale"));
 // API v1
 app.use("/apiv1/anuncios", require("./routes/apiv1/anuncios"));
 

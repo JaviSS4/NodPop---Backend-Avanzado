@@ -1,7 +1,20 @@
 {
-	"empty_file": "the file {{file}} is empty",
-	"not_found": "Not Found",
-	"not_valid": "Not valid",
-	"generic": "There was an error: {{err}}",
-	"Welcome to NodeApi": "Welcome to NodeApi"
+  "empty_file": "the file {{file}} is empty",
+  "not_found": "Not Found",
+  "not_valid": "Not valid",
+  "generic": "There was an error: {{err}}",
+  "Lista de anuncios": "Adverts list",
+  "Listando:": "Listing:",
+  "Nombre": "Name",
+  "Venta": "Sale",
+  "Foto": "Photo",
+  "Tags": "Tags",
+  "Ejemplos:": "Examples:",
+  "Todos": "All",
+  "Paginado": "Paginated",
+  "Ordenado por precio ascendente": "Sort by price ascending",
+  "Ordenado por precio descendente": "Sort by price descending",
+  "Con tag mobile": "With mobile tag",
+  "Volver a home": "Back to home",
+  "Precio": "Price"
 }
