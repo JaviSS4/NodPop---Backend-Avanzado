@@ -8,23 +8,34 @@ class LoginController {
     res.render("login");
   }
   async post(req, res, next) {
-    const { email, password } = req.body;
+    try {
+      const { email, password } = req.body;
 
-    const usuario = await Usuario.findOne({ email });
+      const usuario = await Usuario.findOne({ email });
 
-    if (!usuario || !(await usuario.comparePassword(password))) {
-      res.locals.error = "Invalid credentials";
-      res.render("login");
-      return;
+      if (!usuario || !(await usuario.comparePassword(password))) {
+        res.locals.error = "Invalid credentials";
+        res.render("login");
+        return;
+      }
+
+      req.session.usuarioLogado = {
+        _id: usuario._id,
+      };
+      res.redirect("/privado");
+    } catch (err) {
+      next(err);
     }
-
-    req.session.usuarioLogado = {
-      _id: usuario._id,
-    };
-    res.redirect("/privado");
   }
-  catch(err) {
-    next(err);
+
+  logout(req, res, next) {
+    req.session.regenerate((err) => {
+      if (err) {
+        next(err);
+        return;
+      }
+      res.redirect("/");
+    });
   }
 }
 

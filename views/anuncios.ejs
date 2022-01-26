@@ -13,10 +13,20 @@
       </br>
     
     </br>
-    <a href="/login" class="navbar-brand">Login</a>
+    <% if (session.usuarioLogado) { %>
+    <a href="/logout" class="navbar-brand">Logout</a>
     </br>
     </br>
     <a href="/privado" class="navbar-brand">privado</a>
+      
+    <%} else {%>
+    <a href="/login" class="navbar-brand">Login</a>
+    </br>
+    </br>
+
+    <%}%>
+    
+    
     </div>
   </div>
 </div>

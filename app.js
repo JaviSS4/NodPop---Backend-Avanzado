@@ -8,6 +8,8 @@ const bodyParser = require("body-parser");
 
 const session = require("express-session");
 const LoginController = require("./controllers/loginController");
+const sessionAuth = require("./lib/sessionMiddleware");
+const MongoStore = require("connect-mongo");
 
 /* jshint ignore:start */
 const db = require("./lib/connectMongoose");
@@ -49,8 +51,17 @@ app.use(
     cookie: {
       maxAge: 1000 * 60 * 60 * 24, //de inactividad
     },
+    store: MongoStore.create({
+      mongoUrl: "MONGODB_CONNECTION_STRING",
+    }),
   })
 );
+
+// hacer disponible la sesión para todas las vistas
+app.use((req, res, next) => {
+  res.locals.session = req.session;
+  next();
+});
 
 // Web
 const loginController = new LoginController();
@@ -60,8 +71,9 @@ app.use("/anuncios", require("./routes/anuncios"));
 
 app.get("/login", loginController.index);
 app.post("/login", loginController.post);
+app.get("/logout", loginController.logout);
 
-app.use("/privado", require("./routes/privado"));
+app.use("/privado", sessionAuth, require("./routes/privado"));
 
 app.use("/change-locale", require("./routes/change-locale"));
 // API v1
