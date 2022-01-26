@@ -6,6 +6,9 @@ const logger = require("morgan");
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 
+const session = require("express-session");
+const LoginController = require("./controllers/loginController");
+
 /* jshint ignore:start */
 const db = require("./lib/connectMongoose");
 /* jshint ignore:end */
@@ -35,10 +38,31 @@ app.use(i18n.init);
 /* i18n.setLocale("es");
 console.log(i18n.__("Welcome to NodePop")); */
 
+// Setup de sesiones del website
+
+app.use(
+  session({
+    name: "nodepop-session",
+    secret: "a;!6$%8&m!b<s>[V>9X,6k(tdkSD8Q-E",
+    saveUninitialized: true,
+    resave: false,
+    cookie: {
+      maxAge: 1000 * 60 * 60 * 24, //de inactividad
+    },
+  })
+);
+
 // Web
+const loginController = new LoginController();
+
 app.use("/", require("./routes/index"));
 app.use("/anuncios", require("./routes/anuncios"));
-app.use("/login", require("./routes/login"));
+
+app.get("/login", loginController.index);
+app.post("/login", loginController.post);
+
+app.use("/privado", require("./routes/privado"));
+
 app.use("/change-locale", require("./routes/change-locale"));
 // API v1
 app.use("/apiv1/anuncios", require("./routes/apiv1/anuncios"));
