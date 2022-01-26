@@ -38,6 +38,7 @@ console.log(i18n.__("Welcome to NodePop")); */
 // Web
 app.use("/", require("./routes/index"));
 app.use("/anuncios", require("./routes/anuncios"));
+app.use("/login", require("./routes/login"));
 app.use("/change-locale", require("./routes/change-locale"));
 // API v1
 app.use("/apiv1/anuncios", require("./routes/apiv1/anuncios"));
