@@ -10,6 +10,10 @@ Api for the iOS/Android apps..
 
     npm install
 
+### Before using
+
+Copy .env.example to .env and set your credentials
+
 ### Configure
 
 Review lib/connectMongoose.js to set database configuration
