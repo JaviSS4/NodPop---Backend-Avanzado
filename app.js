@@ -9,6 +9,7 @@ const bodyParser = require("body-parser");
 const session = require("express-session");
 const LoginController = require("./controllers/loginController");
 const sessionAuth = require("./lib/sessionMiddleware");
+const jwtAuth = require("./lib/jwtAuthMiddleware");
 const MongoStore = require("connect-mongo");
 
 /* jshint ignore:start */
@@ -51,9 +52,9 @@ app.use(
     cookie: {
       maxAge: 1000 * 60 * 60 * 24, //de inactividad
     },
-    store: MongoStore.create({
-      mongoUrl: "MONGODB_CONNECTION_STRING",
-    }),
+    /* store: MongoStore.create({
+      mongoUrl: process.env.MONGODB_CONNECTION_STRING,
+    }), */
   })
 );
 
@@ -77,8 +78,9 @@ app.use("/privado", sessionAuth, require("./routes/privado"));
 
 app.use("/change-locale", require("./routes/change-locale"));
 // API v1
-app.use("/apiv1/anuncios", require("./routes/apiv1/anuncios"));
 
+app.use("/apiv1/anuncios", jwtAuth, require("./routes/apiv1/anuncios"));
+app.post("/apiv1/authenticate", loginController.postJWT);
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   const err = new Error("Not Found");
