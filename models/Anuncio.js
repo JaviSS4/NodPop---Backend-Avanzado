@@ -5,6 +5,7 @@ const fs = require("fs");
 const flow = require("../lib/flowControl");
 const configAnuncios = require("../local_config").anuncios;
 const path = require("path");
+const cote = require("cote");
 
 const thumbnailRequester = new cote.Requester(
   {
