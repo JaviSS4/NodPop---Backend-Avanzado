@@ -9,7 +9,7 @@ const cote = require("cote");
 
 const thumbnailRequester = new cote.Requester(
   {
-    name: "thumbnail creator client",
+    name: "thumbnail client",
   },
   { log: false, statusLogsEnabled: false }
 );
@@ -98,16 +98,16 @@ anuncioSchema.methods.setFoto = async function ({
 }) {
   if (!imageOriginalName) return;
 
-  const imagePublicPath = path.join(
+  const imgPath = path.join(
     __dirname,
     "../public/images/anuncios",
     imageOriginalName
   );
-  await fs.copy(imagePath, imagePublicPath);
+  await fs.copy(imagePath, imgPath);
 
   this.foto = imageOriginalName;
 
-  thumbnailRequester.send({ type: "createThumbnail", image: imagePublicPath });
+  thumbnailRequester.send({ type: "createThumbnail", image: imgPath });
 };
 
 var Anuncio = mongoose.model("Anuncio", anuncioSchema);
