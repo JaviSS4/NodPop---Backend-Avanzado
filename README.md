@@ -1,6 +1,6 @@
 # Amazon Web Service Links
 ### React app: http://34.239.61.143
-### Backend: http://ec2-34-239-61-143.compute-1.amazonaws.com 
+### Node app: http://ec2-34-239-61-143.compute-1.amazonaws.com 
 (The only static file is style.css in public/stylesheets)
 
 # NodePop
